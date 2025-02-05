@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -18,5 +19,14 @@ public class Utils {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(fileContent, new TypeReference<>() {
         });
+    }
+
+    public static String parseMapIntoJson(Map<String, Object> mapObject) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString((mapObject));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
