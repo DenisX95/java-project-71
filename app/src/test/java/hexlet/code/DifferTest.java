@@ -1,8 +1,6 @@
 package hexlet.code;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -14,22 +12,23 @@ public class DifferTest {
 
     private static String jsonFile1;
     private static String jsonFile2;
-    private static String emptyFile;
+    private static String jsonEmptyFile;
+    private static String ymlFile1;
+    private static String ymlFile2;
+    private static String ymlEmptyFile;
 
-    private static Path getFilePath(String fileName) {
-        return Paths.get("src", "test", "resources", fileName);
-    }
-
-    private static String readFile(String fileName) throws IOException {
-        var path = getFilePath(fileName);
-        return Files.readString(path).trim();
+    private static String getFilePath(String fileName) {
+        return Paths.get("src", "test", "resources", fileName).toString();
     }
 
     @BeforeAll
     public static void setUp()  throws IOException {
-        jsonFile1 = getFilePath("file1.json").toString();
-        jsonFile2 = getFilePath("file2.json").toString();
-        emptyFile = getFilePath("empty.json").toString();
+        jsonFile1 = getFilePath("file1.json");
+        jsonFile2 = getFilePath("file2.json");
+        jsonEmptyFile = getFilePath("empty.json");
+        ymlFile1 = getFilePath("filepath1.yml");
+        ymlFile2 = getFilePath("filepath2.yml");
+        ymlEmptyFile = getFilePath("empty.yml");
     }
 
     @Test
@@ -47,6 +46,10 @@ public class DifferTest {
         String actual = Differ.generate(jsonFile1, jsonFile2);
         assertNotNull(actual);
         assertEquals(expected, actual);
+
+        actual = Differ.generate(ymlFile1, ymlFile2);
+        assertNotNull(actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -59,7 +62,11 @@ public class DifferTest {
                   - timeout: 50
                 }
                 """.trim();
-        String actual = Differ.generate(jsonFile1, emptyFile);
+        String actual = Differ.generate(jsonFile1, jsonEmptyFile);
+        assertNotNull(actual);
+        assertEquals(expected, actual);
+
+        actual = Differ.generate(ymlFile1, ymlEmptyFile);
         assertNotNull(actual);
         assertEquals(expected, actual);
     }
@@ -73,7 +80,11 @@ public class DifferTest {
                   + verbose: true
                 }
                 """.trim();
-        String actual = Differ.generate(emptyFile, jsonFile2);
+        String actual = Differ.generate(jsonEmptyFile, jsonFile2);
+        assertNotNull(actual);
+        assertEquals(expected, actual);
+
+        actual = Differ.generate(ymlEmptyFile, ymlFile2);
         assertNotNull(actual);
         assertEquals(expected, actual);
     }
@@ -81,8 +92,13 @@ public class DifferTest {
     @Test
     public void testGenerateWithBothEmptyFiles() throws IOException {
         String expected = "{}";
-        String actual = Differ.generate(emptyFile, emptyFile);
+        String actual = Differ.generate(jsonEmptyFile, jsonEmptyFile);
+        assertNotNull(actual);
+        assertEquals(expected, actual);
+
+        actual = Differ.generate(ymlEmptyFile, ymlEmptyFile);
         assertNotNull(actual);
         assertEquals(expected, actual);
     }
+
 }

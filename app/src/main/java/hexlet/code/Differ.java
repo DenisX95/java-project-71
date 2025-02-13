@@ -8,8 +8,8 @@ public class Differ {
 
     public static String generate(String filepath1, String filepath2) throws IOException {
 
-        Map<String, Object> fileMap1 = Utils.parseJsonIntoJavaMap(filepath1);
-        Map<String, Object> fileMap2 = Utils.parseJsonIntoJavaMap(filepath2);
+        Map<String, Object> fileMap1 = Parser.parseFileIntoJavaMap(filepath1);
+        Map<String, Object> fileMap2 = Parser.parseFileIntoJavaMap(filepath2);
 
         TreeSet<String> keys = new TreeSet<>();
         keys.addAll(fileMap1.keySet());
