@@ -52,16 +52,16 @@ public class Differ {
 
         diffListElement.put("key", key);
         if (!map1.containsKey(key)) {
-            diffListElement.put("sign", "+");
+            diffListElement.put("status", "added");
             diffListElement.put("value", value2.orElse(null));
         } else if (!map2.containsKey(key)) {
-            diffListElement.put("sign", "-");
+            diffListElement.put("status", "removed");
             diffListElement.put("value", value1.orElse(null));
         } else if (value1.equals(value2)) {
-            diffListElement.put("sign", "");
+            diffListElement.put("status", "unmodified");
             diffListElement.put("value", value2.orElse(null));
         } else {
-            diffListElement.put("sign", "-+");
+            diffListElement.put("status", "updated");
             diffListElement.put("value1", value1.orElse(null));
             diffListElement.put("value2", value2.orElse(null));
         }

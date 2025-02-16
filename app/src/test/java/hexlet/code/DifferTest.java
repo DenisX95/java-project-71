@@ -10,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class DifferTest {
 
-    private static String expected;
+    private static String stylishExpected;
+    private static String planExpected;
 
     private static String getFixturePath(String fileName) {
         return Paths.get("src", "test", "resources", fileName).toString();
@@ -18,27 +19,51 @@ public class DifferTest {
 
     @BeforeAll
     public static void setUp()  throws IOException {
-        expected = Utills.readFile(Utills.getPath(getFixturePath("expected")))
+        stylishExpected = Utills.readFile(Utills.getPath(getFixturePath("stylishExpected")))
+                .replace("\r\n", "\n").trim();
+        planExpected = Utills.readFile(Utills.getPath(getFixturePath("planExpected")))
                 .replace("\r\n", "\n").trim();
     }
 
     @Test
-    public void testGenerateWithJson() throws IOException {
+    public void testGenerateWithJsonIntoStylish() throws IOException {
         String actual = Differ.generate(
                 getFixturePath("filepath1.json"),
                 getFixturePath("filepath2.json")
         );
         assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertEquals(stylishExpected, actual);
     }
 
     @Test
-    public void testGenerateWithYaml() throws IOException {
+    public void testGenerateWithYamlIntoStylish() throws IOException {
         String actual = Differ.generate(
                 getFixturePath("filepath1.yaml"),
                 getFixturePath("filepath2.yaml")
         );
         assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertEquals(stylishExpected, actual);
+    }
+
+    @Test
+    public void testGenerateWithJsonIntoPlan() throws IOException {
+        String actual = Differ.generate(
+                getFixturePath("filepath1.json"),
+                getFixturePath("filepath2.json"),
+                "plan"
+        );
+        assertNotNull(actual);
+        assertEquals(planExpected, actual);
+    }
+
+    @Test
+    public void testGenerateWithYamlIntoPlan() throws IOException {
+        String actual = Differ.generate(
+                getFixturePath("filepath1.yaml"),
+                getFixturePath("filepath2.yaml"),
+                "plan"
+        );
+        assertNotNull(actual);
+        assertEquals(planExpected, actual);
     }
 }
