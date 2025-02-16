@@ -18,15 +18,20 @@ public class App implements Callable<Integer> {
     @Parameters(paramLabel = "filepath2", description = "path to second file")
     private String filepath2;
 
-    @Option(names = {"-f", "--format"}, paramLabel = "format", description = "output format [default: stylish]")
+    @Option(
+            names = {"-f", "--format"},
+            paramLabel = "format",
+            description = "output format [default: stylish]",
+            defaultValue = "stylish"
+    )
     private String format;
 
     @Override
     public Integer call() throws IOException {
 
-        var result = Differ.generate(filepath1, filepath2);
-
+        String result = Differ.generate(filepath1, filepath2, format);
         System.out.println(result);
+
         return 0;
     }
 
@@ -34,5 +39,4 @@ public class App implements Callable<Integer> {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
     }
-
 }
