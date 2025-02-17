@@ -20,8 +20,8 @@ public class Plan implements DataFormatter {
                 case "added" -> sb.append("added with value: %s%n".formatted(formatValue(map.get("value"))));
                 case "removed" -> sb.append("removed\n");
                 case "updated" -> sb.append("updated. From %s to %s%n".formatted(
-                        formatValue(map.get("value1")),
-                        formatValue(map.get("value2"))
+                        formatValue(map.get("from")),
+                        formatValue(map.get("to"))
                 ));
                 default -> throw new IllegalStateException("Unexpected value: " + status);
             }

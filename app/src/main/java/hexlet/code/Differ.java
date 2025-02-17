@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.TreeSet;
 
 
@@ -46,7 +46,7 @@ public class Differ {
             Map<String, Object> map1,
             Map<String, Object> map2
     ) {
-        Map<String, Object> diffListElement = new HashMap<>();
+        Map<String, Object> diffListElement = new LinkedHashMap<>();
         Optional<Object> value1 = Optional.ofNullable(map1.get(key));
         Optional<Object> value2 = Optional.ofNullable(map2.get(key));
 
@@ -62,8 +62,8 @@ public class Differ {
             diffListElement.put("value", value2.orElse(null));
         } else {
             diffListElement.put("status", "updated");
-            diffListElement.put("value1", value1.orElse(null));
-            diffListElement.put("value2", value2.orElse(null));
+            diffListElement.put("from", value1.orElse(null));
+            diffListElement.put("to", value2.orElse(null));
         }
 
         return diffListElement;

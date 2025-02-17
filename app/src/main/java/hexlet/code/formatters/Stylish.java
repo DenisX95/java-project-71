@@ -18,9 +18,9 @@ public class Stylish implements DataFormatter {
                 case "unmodified" -> sb.append(" ".repeat(4))
                         .append("%s: %s%n".formatted(map.get("key"), map.get("value")));
                 case "updated" -> sb.append(" ".repeat(2))
-                        .append("- %s: %s%n".formatted(map.get("key"), map.get("value1")))
+                        .append("- %s: %s%n".formatted(map.get("key"), map.get("from")))
                         .append(" ".repeat(2))
-                        .append("+ %s: %s%n".formatted(map.get("key"), map.get("value2")));
+                        .append("+ %s: %s%n".formatted(map.get("key"), map.get("to")));
                 default -> throw new IllegalStateException("Unexpected value: " + status);
             }
         }

@@ -12,6 +12,7 @@ public class DifferTest {
 
     private static String stylishExpected;
     private static String planExpected;
+    private static String jsonExpected;
 
     private static String getFixturePath(String fileName) {
         return Paths.get("src", "test", "resources", fileName).toString();
@@ -22,6 +23,8 @@ public class DifferTest {
         stylishExpected = Utills.readFile(Utills.getPath(getFixturePath("stylishExpected")))
                 .replace("\r\n", "\n").trim();
         planExpected = Utills.readFile(Utills.getPath(getFixturePath("planExpected")))
+                .replace("\r\n", "\n").trim();
+        jsonExpected = Utills.readFile(Utills.getPath(getFixturePath("jsonExpected.json")))
                 .replace("\r\n", "\n").trim();
     }
 
@@ -65,5 +68,27 @@ public class DifferTest {
         );
         assertNotNull(actual);
         assertEquals(planExpected, actual);
+    }
+
+    @Test
+    public void testGenerateWithJsonIntoJson() throws IOException {
+        String actual = Differ.generate(
+                getFixturePath("filepath1.json"),
+                getFixturePath("filepath2.json"),
+                "json"
+        );
+        assertNotNull(actual);
+        assertEquals(jsonExpected, actual);
+    }
+
+    @Test
+    public void testGenerateWithYamlIntoJson() throws IOException {
+        String actual = Differ.generate(
+                getFixturePath("filepath1.yaml"),
+                getFixturePath("filepath2.yaml"),
+                "json"
+        );
+        assertNotNull(actual);
+        assertEquals(jsonExpected, actual);
     }
 }
