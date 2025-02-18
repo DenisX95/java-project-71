@@ -38,10 +38,6 @@ public final class App implements Callable<Integer> {
         } catch (IllegalArgumentException e) {
             System.err.println("Ошибка в аргументах: " + e.getMessage());
             return 2;
-        } catch (Exception e) {
-            System.err.println("Другая ошибка: " + e.getMessage());
-            e.printStackTrace();
-            return 99;
         }
     }
 
