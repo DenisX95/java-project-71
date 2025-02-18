@@ -3,7 +3,7 @@ package hexlet.code.formatters;
 import java.util.List;
 import java.util.Map;
 
-public class Plain implements DataFormatter {
+public final class Plain implements DataFormatter {
     @Override
     public String format(List<Map<String, Object>> diffList) {
         var sb = new StringBuilder();
@@ -17,13 +17,14 @@ public class Plain implements DataFormatter {
 
             sb.append("Property '%s' was ".formatted(map.get("key")));
             switch (status) {
-                case "added" -> sb.append("added with value: %s%n".formatted(formatValue(map.get("value"))));
+                case "added" -> sb.append("added with value: %s%n".formatted(
+                        formatValue(map.get("value"))));
                 case "removed" -> sb.append("removed\n");
                 case "updated" -> sb.append("updated. From %s to %s%n".formatted(
                         formatValue(map.get("from")),
                         formatValue(map.get("to"))
                 ));
-                default -> throw new IllegalStateException("Unexpected value: " + status);
+                default -> throw new IllegalStateException("Unexpected map status for Plain: " + status);
             }
         }
 
