@@ -12,3 +12,7 @@ bin
 .classpath
 .idea/
 .factorypath
+
+# Ignore demo files
+/*.json
+/*.yaml

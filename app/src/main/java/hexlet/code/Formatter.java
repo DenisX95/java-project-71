@@ -2,7 +2,7 @@ package hexlet.code;
 
 import hexlet.code.formatters.DataFormatter;
 import hexlet.code.formatters.Json;
-import hexlet.code.formatters.Plan;
+import hexlet.code.formatters.Plain;
 import hexlet.code.formatters.Stylish;
 
 import java.io.IOException;
@@ -13,9 +13,9 @@ public class Formatter {
     public static DataFormatter getDataFormatter(String format) {
         return switch (format) {
             case "stylish" -> new Stylish();
-            case "plan" -> new Plan();
+            case "plain" -> new Plain();
             case "json" -> new Json();
-            default -> throw new IllegalStateException("Unexpected value: " + format);
+            default -> throw new IllegalStateException("Unexpected output format: " + format);
         };
     }
 

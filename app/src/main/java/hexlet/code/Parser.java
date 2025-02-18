@@ -14,7 +14,8 @@ public class Parser {
             case "json" -> new ObjectMapper();
             case "yaml", "yml" -> new ObjectMapper(new YAMLFactory());
             default ->
-                    throw new IllegalStateException("Unexpected fileFormat: " + Utills.getFileExtension(filePath));
+                    throw new IllegalStateException("Unexpected input fileFormat: "
+                            + Utills.getFileExtension(filePath));
         };
     }
 

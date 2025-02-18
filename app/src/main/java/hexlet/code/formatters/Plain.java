@@ -3,7 +3,7 @@ package hexlet.code.formatters;
 import java.util.List;
 import java.util.Map;
 
-public class Plan implements DataFormatter {
+public class Plain implements DataFormatter {
     @Override
     public String format(List<Map<String, Object>> diffList) {
         var sb = new StringBuilder();

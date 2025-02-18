@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class DifferTest {
 
     private static String stylishExpected;
-    private static String planExpected;
+    private static String plainExpected;
     private static String jsonExpected;
 
     private static String getFixturePath(String fileName) {
@@ -22,7 +22,7 @@ public class DifferTest {
     public static void setUp()  throws IOException {
         stylishExpected = Utills.readFile(Utills.getPath(getFixturePath("stylishExpected")))
                 .replace("\r\n", "\n").trim();
-        planExpected = Utills.readFile(Utills.getPath(getFixturePath("planExpected")))
+        plainExpected = Utills.readFile(Utills.getPath(getFixturePath("plainExpected")))
                 .replace("\r\n", "\n").trim();
         jsonExpected = Utills.readFile(Utills.getPath(getFixturePath("jsonExpected.json")))
                 .replace("\r\n", "\n").trim();
@@ -49,25 +49,25 @@ public class DifferTest {
     }
 
     @Test
-    public void testGenerateWithJsonIntoPlan() throws IOException {
+    public void testGenerateWithJsonIntoPlain() throws IOException {
         String actual = Differ.generate(
                 getFixturePath("filepath1.json"),
                 getFixturePath("filepath2.json"),
-                "plan"
+                "plain"
         );
         assertNotNull(actual);
-        assertEquals(planExpected, actual);
+        assertEquals(plainExpected, actual);
     }
 
     @Test
-    public void testGenerateWithYamlIntoPlan() throws IOException {
+    public void testGenerateWithYamlIntoPlain() throws IOException {
         String actual = Differ.generate(
                 getFixturePath("filepath1.yaml"),
                 getFixturePath("filepath2.yaml"),
-                "plan"
+                "plain"
         );
         assertNotNull(actual);
-        assertEquals(planExpected, actual);
+        assertEquals(plainExpected, actual);
     }
 
     @Test
