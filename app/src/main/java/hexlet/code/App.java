@@ -28,11 +28,21 @@ public final class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws IOException {
-
-        String result = Differ.generate(filepath1, filepath2, format);
-        System.out.println(result);
-
-        return 0;
+        try {
+            String result = Differ.generate(filepath1, filepath2, format);
+            System.out.println(result);
+            return 0;
+        } catch (IOException e) {
+            System.err.println("Ошибка ввода-вывода: " + e.getMessage());
+            return 1;
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ошибка в аргументах: " + e.getMessage());
+            return 2;
+        } catch (Exception e) {
+            System.err.println("Другая ошибка: " + e.getMessage());
+            e.printStackTrace();
+            return 99;
+        }
     }
 
     public static void main(String[] args) {
