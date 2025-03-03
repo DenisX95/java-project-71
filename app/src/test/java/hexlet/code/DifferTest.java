@@ -3,6 +3,8 @@ package hexlet.code;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,11 +22,11 @@ public class DifferTest {
 
     @BeforeAll
     public static void setUp()  throws IOException {
-        stylishExpected = Utills.readFile(Utills.getPath(getFixturePath("stylishExpected")))
+        stylishExpected = Utills.readFile(getFixturePath("stylishExpected"))
                 .replace("\r\n", "\n").trim();
-        plainExpected = Utills.readFile(Utills.getPath(getFixturePath("plainExpected")))
+        plainExpected = Utills.readFile(getFixturePath("plainExpected"))
                 .replace("\r\n", "\n").trim();
-        jsonExpected = Utills.readFile(Utills.getPath(getFixturePath("jsonExpected.json")))
+        jsonExpected = Utills.readFile(getFixturePath("jsonExpected.json"))
                 .replace("\r\n", "\n").trim();
     }
 
@@ -33,6 +35,17 @@ public class DifferTest {
         String actual = Differ.generate(
                 getFixturePath("filepath1.json"),
                 getFixturePath("filepath2.json")
+        );
+        assertNotNull(actual);
+        assertEquals(stylishExpected, actual);
+    }
+
+    @Test
+    public void testGenerateWithJsonIntoStylishExplicit() throws IOException {
+        String actual = Differ.generate(
+                getFixturePath("filepath1.json"),
+                getFixturePath("filepath2.json"),
+                "stylish"
         );
         assertNotNull(actual);
         assertEquals(stylishExpected, actual);
@@ -77,8 +90,13 @@ public class DifferTest {
                 getFixturePath("filepath2.json"),
                 "json"
         );
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode actualJson = objectMapper.readTree(actual);
+        JsonNode expectedJson = objectMapper.readTree(jsonExpected);
+
         assertNotNull(actual);
-        assertEquals(jsonExpected, actual);
+        assertEquals(actualJson, expectedJson);
     }
 
     @Test
@@ -88,7 +106,12 @@ public class DifferTest {
                 getFixturePath("filepath2.yaml"),
                 "json"
         );
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode actualJson = objectMapper.readTree(actual);
+        JsonNode expectedJson = objectMapper.readTree(jsonExpected);
+
         assertNotNull(actual);
-        assertEquals(jsonExpected, actual);
+        assertEquals(actualJson, expectedJson);
     }
 }

@@ -20,9 +20,9 @@ public final class Stylish implements DataFormatter {
                 case "unmodified" -> sb.append(" ".repeat(NUM_OF_SPACES * 2))
                         .append("%s: %s%n".formatted(map.get("key"), map.get("value")));
                 case "updated" -> sb.append(" ".repeat(NUM_OF_SPACES))
-                        .append("- %s: %s%n".formatted(map.get("key"), map.get("from")))
+                        .append("- %s: %s%n".formatted(map.get("key"), map.get("value1")))
                         .append(" ".repeat(NUM_OF_SPACES))
-                        .append("+ %s: %s%n".formatted(map.get("key"), map.get("to")));
+                        .append("+ %s: %s%n".formatted(map.get("key"), map.get("value2")));
                 default -> throw new IllegalStateException("Unexpected map status for Stylish: " + status);
             }
         }

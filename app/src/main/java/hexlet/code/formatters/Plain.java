@@ -21,8 +21,8 @@ public final class Plain implements DataFormatter {
                         formatValue(map.get("value"))));
                 case "removed" -> sb.append("removed\n");
                 case "updated" -> sb.append("updated. From %s to %s%n".formatted(
-                        formatValue(map.get("from")),
-                        formatValue(map.get("to"))
+                        formatValue(map.get("value1")),
+                        formatValue(map.get("value2"))
                 ));
                 default -> throw new IllegalStateException("Unexpected map status for Plain: " + status);
             }

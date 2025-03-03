@@ -5,26 +5,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Map;
 
 public class Parser {
-    public static ObjectMapper getMapper(Path filePath) {
-        return switch (Utills.getFileExtension(filePath)) {
+    public static ObjectMapper getMapper(String extension) {
+        return switch (extension) {
             case "json" -> new ObjectMapper();
             case "yaml", "yml" -> new ObjectMapper(new YAMLFactory());
             default ->
                     throw new IllegalStateException("Unexpected input fileFormat: "
-                            + Utills.getFileExtension(filePath));
+                            + extension);
         };
     }
 
-    public static Map<String, Object> parseStringIntoMap(String fileAddress) throws IOException {
-        Path filePath = Utills.getPath(fileAddress);
-        String fileContent = Utills.readFile(filePath);
-
-        ObjectMapper mapper = getMapper(filePath);
-        return mapper.readValue(fileContent, new TypeReference<>() { });
+    public static Map<String, Object> parseStringIntoMap(String content, String extension) throws IOException {
+        ObjectMapper mapper = getMapper(extension);
+        return mapper.readValue(content, new TypeReference<>() { });
     }
 
 }
